@@ -1,4 +1,5 @@
-public class Account { public int accountId;
+public class Account {
+    public int accountId;
     public String holder;
     public int amount;
 

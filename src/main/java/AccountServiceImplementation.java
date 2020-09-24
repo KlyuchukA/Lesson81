@@ -2,12 +2,12 @@ import java.sql.*;
 
 public class AccountServiceImplementation implements AccountService {
     Connection connection = null;
-    String user="sa";
+    String user = "sa";
     String pass = null;
 
     public AccountServiceImplementation() throws SQLException {
-//        this.connection = DriverManager.getConnection("jdbc:h2:mem:test;INIT=RUNSCRIPT FROM './schema.sql'\\;RUNSCRIPT FROM './data.sql'");
-        this.connection = DriverManager.getConnection("jdbc:h2:tcp://http://172.18.87.171:8082//mem:test",user,pass);
+        this.connection = DriverManager.getConnection("jdbc:h2:mem:test;INIT=RUNSCRIPT FROM './schema.sql'\\;RUNSCRIPT FROM './data.sql'");
+//        this.connection = DriverManager.getConnection("jdbc:h2:tcp://172.18.87.171:8082//mem:test",user,pass);
     }
 
     public void printInfo() throws SQLException {
@@ -28,9 +28,7 @@ public class AccountServiceImplementation implements AccountService {
         }
     }
 
-
     public void balance(int accountId) throws UnknownAccountException, SQLException {
-
 
         PreparedStatement statement = connection.prepareStatement("SELECT amount FROM BANK where id = ?");
         statement.setInt(1, accountId);
@@ -38,7 +36,6 @@ public class AccountServiceImplementation implements AccountService {
 
         statement.execute();
         result1 = statement.getResultSet();
-
 
         if (result1.next()) {
 
@@ -51,10 +48,11 @@ public class AccountServiceImplementation implements AccountService {
                 }
                 System.out.println();
 
-            }  } else  {
-                throw new UnknownAccountException();
             }
+        } else {
+            throw new UnknownAccountException();
         }
+    }
 
     public void withdraw(int accountId, int amount) throws NotEnoughMoneyException, UnknownAccountException, SQLException {
 
@@ -72,7 +70,7 @@ public class AccountServiceImplementation implements AccountService {
             if (value >= amount) {
                 value = value - amount;
 
-             PreparedStatement statement2 = connection.prepareStatement("UPDATE BANK SET amount = ? where id = ?");
+                PreparedStatement statement2 = connection.prepareStatement("UPDATE BANK SET amount = ? where id = ?");
                 statement2.setInt(1, value);
                 statement2.setInt(2, accountId);
 
@@ -81,10 +79,9 @@ public class AccountServiceImplementation implements AccountService {
             } else {
                 throw new NotEnoughMoneyException();
             }
-        } else  {
+        } else {
             throw new UnknownAccountException();
         }
-
     }
 
     public void deposit(int accountId, int amount) throws NotEnoughMoneyException, UnknownAccountException, SQLException {
@@ -111,7 +108,7 @@ public class AccountServiceImplementation implements AccountService {
             } else {
                 throw new NotEnoughMoneyException();
             }
-        } else  {
+        } else {
             throw new UnknownAccountException();
         }
     }
