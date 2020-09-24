@@ -4,8 +4,24 @@ public class Main {
 
     public static void main(String[] args) throws SQLException {
 
-        AccountServiceImplementation accountService = new AccountServiceImplementation();
-        accountService.printInfo();
+        try {
+            AccountServiceImplementation accountService = new AccountServiceImplementation();
+//            accountService.printInfo();
+//            accountService.withdraw(2,100000);
+//            accountService.deposit(3,100);
+            accountService.transfer(1,2,100);
+            accountService.printInfo();
+//            accountService.balance(2);
+        }
+//        catch (UnknownAccountException | NotEnoughMoneyException ex) {
+//            System.out.println(ex.getMessage());
+//        }
+
+        catch (UnknownAccountException re) {
+            System.out.println(re.getMessage());
+        } catch (NotEnoughMoneyException e) {
+            System.out.println(e.getMessage());
+        }
 
 //        Connection connection = null;
 //        Statement statement = null;
